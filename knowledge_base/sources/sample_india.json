@@ -1,0 +1,29 @@
+[
+  {
+    "title": "SAMPLE - Indian Contract Act, 1872",
+    "source_type": "act", "jurisdiction": "IN", "version": "sample-paraphrase",
+    "url": "https://www.indiacode.nic.in/", "verified": false,
+    "sections": [
+      {"section": "s.23", "text": "The consideration or object of an agreement is lawful unless it is forbidden by law, would defeat the provisions of any law, is fraudulent, involves injury to another person or property, or is regarded by the court as immoral or opposed to public policy. Every agreement of which the object or consideration is unlawful is void."},
+      {"section": "s.27", "text": "Every agreement by which anyone is restrained from exercising a lawful profession, trade or business of any kind is, to that extent, void."},
+      {"section": "s.28", "text": "Every agreement by which any party is restricted absolutely from enforcing his rights under or in respect of any contract through the usual legal proceedings in the ordinary tribunals, or which limits the time within which he may thus enforce his rights, is void to that extent."},
+      {"section": "s.74", "text": "When a contract has been broken and a sum is named in the contract as the amount to be paid on breach, or the contract contains a penalty clause, the party complaining of the breach is entitled to receive from the party who has broken the contract reasonable compensation not exceeding the amount so named or the penalty stipulated for."}
+    ]
+  },
+  {
+    "title": "SAMPLE - Digital Personal Data Protection Act, 2023",
+    "source_type": "act", "jurisdiction": "IN", "version": "sample-paraphrase",
+    "url": "https://www.meity.gov.in/", "verified": false,
+    "sections": [
+      {"section": "s.6", "text": "Consent given by a data principal must be free, specific, informed, unconditional and unambiguous with a clear affirmative action, and must be limited to such personal data as is necessary for the specified purpose. A data principal may withdraw consent at any time, and the ease of withdrawal must be comparable to the ease of giving consent."}
+    ]
+  },
+  {
+    "title": "SAMPLE - Transfer of Property Act, 1882",
+    "source_type": "act", "jurisdiction": "IN", "version": "sample-paraphrase",
+    "url": "https://www.indiacode.nic.in/", "verified": false,
+    "sections": [
+      {"section": "s.106", "text": "In the absence of a contract or local law or usage to the contrary, a lease of immovable property for a purpose other than agricultural or manufacturing is deemed to be a lease from year to year terminable by six months' notice, or a lease from month to month terminable by fifteen days' notice, depending on the period of the lease. The notice must be in writing."}
+    ]
+  }
+]
