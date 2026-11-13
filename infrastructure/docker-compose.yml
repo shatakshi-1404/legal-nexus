@@ -1,0 +1,45 @@
+# Run from the repo root:  docker compose -f infrastructure/docker-compose.yml --env-file .env up --build
+x-backend-env: &backend-env
+  DATABASE_URL: postgresql+psycopg://legalnexus:legalnexus@db:5432/legalnexus
+  CHECKPOINT_DSN: postgresql://legalnexus:legalnexus@db:5432/legalnexus
+  REDIS_URL: redis://redis:6379/0
+  STORAGE_DIR: /data/storage
+  CELERY_EAGER: "false"
+  SECRET_KEY: ${SECRET_KEY:-change-me}
+  ADMIN_EMAILS: ${ADMIN_EMAILS:-[]}
+  LLM_PROVIDER: ${LLM_PROVIDER:-groq}
+  GROQ_API_KEY: ${GROQ_API_KEY:-}
+  GROQ_MODEL: ${GROQ_MODEL:-llama-3.3-70b-versatile}
+  OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+  OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+  OPENAI_MODEL: ${OPENAI_MODEL:-}
+  REQUIRE_APPROVAL: ${REQUIRE_APPROVAL:-false}
+  LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
+  LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment: { POSTGRES_USER: legalnexus, POSTGRES_PASSWORD: legalnexus, POSTGRES_DB: legalnexus }
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U legalnexus"], interval: 5s, retries: 10 }
+    ports: ["5432:5432"]
+  redis:
+    image: redis:7-alpine
+  backend:
+    build: ../backend
+    environment: *backend-env
+    volumes: [storage:/data/storage, ../knowledge_base:/kb:ro, hfcache:/root/.cache/huggingface]
+    depends_on: { db: { condition: service_healthy }, redis: { condition: service_started } }
+    ports: ["8000:8000"]
+  worker:
+    build: ../backend
+    command: celery -A app.workers.celery_app.celery worker --loglevel=info --concurrency=2
+    environment: *backend-env
+    volumes: [storage:/data/storage, hfcache:/root/.cache/huggingface]
+    depends_on: { db: { condition: service_healthy }, redis: { condition: service_started } }
+  frontend:
+    build: ../frontend
+    ports: ["8080:80"]
+    depends_on: [backend]
+volumes: { pgdata: {}, storage: {}, hfcache: {} }

@@ -1,0 +1,19 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  backend-unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13" }
+      - name: Install lightweight test deps (unit tests need no GPU/LLM/DB)
+        run: pip install pytest pydantic pydantic-settings argon2-cffi pyjwt langgraph
+      - run: cd backend && pytest tests/unit tests/workflows -q
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: cd frontend && npm install && npm run build
